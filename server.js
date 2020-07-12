@@ -27,7 +27,8 @@ server.get('/', (req, res) => {
 });
 server.get('/search',(req,res)=>{
     res.render('pages/searches/new');
-})
+});
+
 server.post('/searches/new', (req, res) => {
     let searchBy = req.body.by;
     let searchFor = req.body.bookName;
@@ -75,7 +76,11 @@ Book.books = [];
 
 server.get('/hello', (req, res) => {
     res.render('pages/index')
-})
+});
+server.get('*',(req,res)=>{
+res.render('pages/error.ejs')
+});
+
 server.listen(PORT, () => {
     console.log(`Hello I'm the server,Listening to port: ${PORT}`);
 });
