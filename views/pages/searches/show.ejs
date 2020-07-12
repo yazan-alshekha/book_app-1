@@ -3,6 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles/reset.css" />
+    <link rel="stylesheet" href="styles/base.css" />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
     <title>Document</title>
   </head>
   <body>
@@ -13,17 +19,16 @@
       <%} else{ %>
       <img src="https://i.imgur.com/J5LVHEL.jpg" alt="" srcset="" />
       <% }%>
-      <li>
+      <h2>
         <%= book.title%><br />
 
-        <br />
-      </li>
+      </h2>
 
-      <li>
+      <h3>
         <%= book.auther %> 
-      </li>
+      </h3>
 
-      <li><p><%= book.desc%></p></li>
+      <p><%= book.desc%></p>
       <hr />
       <%});%>
     </ul>

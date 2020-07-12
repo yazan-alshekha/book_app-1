@@ -22,10 +22,9 @@ server.use(express.urlencoded({ extended: true }));
 server.set('view engine', 'ejs');
 
 server.get('/', (req, res) => {
-    // res.render('pages/searches/new');
     res.render('pages/index');
 });
-server.get('/search',(req,res)=>{
+server.get('/search', (req, res) => {
     res.render('pages/searches/new');
 });
 
@@ -65,7 +64,6 @@ server.post('/searches/new', (req, res) => {
 
 function Book(obj) {
     this.title = obj.volumeInfo.title;
-    // this.img = `https://i.imgur.com/J5LVHEL.jpg`;
     this.img = obj.volumeInfo.imageLinks.thumbnail;
     this.auther = obj.volumeInfo.authers;
     this.desc = obj.volumeInfo.description;
@@ -77,8 +75,8 @@ Book.books = [];
 server.get('/hello', (req, res) => {
     res.render('pages/index')
 });
-server.get('*',(req,res)=>{
-res.render('pages/error.ejs')
+server.get('*', (req, res) => {
+    res.render('pages/error.ejs')
 });
 
 server.listen(PORT, () => {
