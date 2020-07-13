@@ -80,4 +80,9 @@ left: 20%;
     height: 20px;
     width: 70%;
 }
+
+.toggleForm{
+  display: none;
+  /* visibility: hidden; */
+}
 }
