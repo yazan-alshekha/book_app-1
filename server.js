@@ -6,6 +6,8 @@ require('dotenv').config();
 const express = require('express');
 const superagent = require('superagent');
 const cors = require('cors');
+const pg = require('pg');
+const client = new pg.Client(process.env.DB_URL);
 const { resolveSoa } = require('dns');
 
 const server = express();
@@ -79,6 +81,12 @@ server.get('*', (req, res) => {
     res.render('pages/error.ejs')
 });
 
-server.listen(PORT, () => {
-    console.log(`Hello I'm the server,Listening to port: ${PORT}`);
-});
+client.connect()
+    .then(() => {
+
+        server.listen(PORT, () => {
+            console.log(`Hello I'm the server,Listening to port: ${PORT}`);
+        });
+    })
+
+
