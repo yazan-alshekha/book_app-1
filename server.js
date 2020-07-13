@@ -6,9 +6,9 @@ require('dotenv').config();
 const express = require('express');
 const superagent = require('superagent');
 const cors = require('cors');
+// const { resolveSoa } = require('dns');
 const pg = require('pg');
 const client = new pg.Client(process.env.DB_URL);
-const { resolveSoa } = require('dns');
 
 const server = express();
 const PORT = process.env.PORT;
