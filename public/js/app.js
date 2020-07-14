@@ -15,3 +15,12 @@ function burger(){
     links.style.display = 'none';
     quit.style.display = 'none';
   }
+  
+  console.log("fly");
+
+  $('.viewButton').click(function () {
+    console.log("inside");
+    $(this).parent().find('.toggleForm').slideToggle();
+  });
+
+  

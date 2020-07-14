@@ -1,29 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="style/reset.css" />
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles/base.css" />
+    <%- include('../layout/head') %> 
     <title>HOME</title>
   </head>
   <body>
     <header>
-      <h1 class="appTitle">Hello world</h1>
-      <!-- <a href="/search">Search</a> -->
-      <i id="burger" class="material-icons" onclick="burger()">menu</i>
-      <i id="quit" class="material-icons" onclick="quit()">clear</i>
-      <div id="links">
-        <a href="/search">Search</a>
-        
-      </div>
+      <%- include('../layout/header')  %> 
     </header>
 
-    <main></main>
+    <main>
+      <a href="/showww">show</a>
+<ul>
+  
+  <p>
+    <%= dbRowsCount %>
+  </p>
+      <% dbContent.forEach(row => {%> 
+
+        
+        <img src=" <%= row.image_url%>" alt="" srcset="" />
+        <h2>
+          <%= row.title%><br />
+          
+        </h2>
+
+      <h3>
+        <%= row.author %> 
+      </h3>
+
+    
+       <a href="/books/<%= row.id %> ">View Detials</a>
+      <hr />
+      <%});%>
+    </ul>
+
+    </main>
     <footer></footer>
     <!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
     <script src="js/app.js"></script>
