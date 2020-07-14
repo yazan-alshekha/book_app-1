@@ -13,6 +13,13 @@ const client = new pg.Client(process.env.DB_URL);
 const server = express();
 const PORT = process.env.PORT;
 
+//CRUD middelware
+const methodOverride = require('method-override');
+server.use(methodOverride('_method'));
+//app.post('/updateTask/:task_id',updateTask);
+// app.use(methodOverride('_method'));
+
+
 //connect with static styles folder
 server.use(express.static('./public'));
 
@@ -70,33 +77,65 @@ server.get('/books/:id', (req, res) => {
     // let params = req.params;
     let safeValues = [req.params.id]
     client.query(SQL, safeValues)
-        .then(result=>{
+        .then(result => {
             // console.log(results.rows[0]);
-            res.render('pages/books/detail',{bookDetails : result.rows[0]});
+            res.render('pages/books/detail', { bookDetails: result.rows[0] });
         });
 });
 
 
 
-server.post('/books',addToDB);
+server.post('/books', addToDB);
 
-function addToDB(req, res){
-  
+function addToDB(req, res) {
+
     const item = req.body;
     console.log(req.params.id)
     let SQL = `INSERT INTO books (author, title, isbn, image_url, description, bookshelf) VALUES($1, $2, $3, $4, $5, $6);`
     let SQL2 = `SELECT * FROM books;`;
     const safeValues = [item.author, item.bookTitle, item.ISBN, item.thumnail, item.description, item.bookshell];
     client.query(SQL2)
-    .then(client.query(SQL, safeValues))
-    .then( data=>{
-  let id = data.rows[data.rows.length-1].id;
-      console.log(data.rows[data.rows.length-1])
-  res.redirect(`/books/${id}`)
-//   res.redirect(`/`)
-    });
-  }
-  
+        .then(client.query(SQL, safeValues))
+        .then(data => {
+            let id = data.rows[data.rows.length - 1].id;
+            console.log(data.rows[data.rows.length - 1])
+            res.redirect(`/books/${id}`)
+            //   res.redirect(`/`)
+        });
+};
+server.get('/delete/:id', deleteFunc);
+server.put('/update/:id', updateBook);
+
+function deleteFunc(req, res) {
+    let id = req.params.id;
+    console.log('THIS IS AN ID :' + id);
+
+    let SQL = `DELETE FROM books WHERE id=$1;`;
+    let safeValue = [id];
+    client.query(SQL, safeValue)
+        .then(() => { res.redirect('/') })
+}
+//   function updateTask (req,res) {
+//     let {title,description, contact, status, category} = req.body;
+//     let SQL = `UPDATE tasks SET title=$1,description=$2,contact=$3, status=$4, category=$5 WHERE id=$6;`;
+//     let id = req.params.task_id;
+//     let values=[title,description, contact, status, category,id];
+//     client.query(SQL,values)
+//     .then(()=>{
+//       res.redirect(`/tasks/${id}`)
+//     })
+function updateBook(req, res) {
+    console.log('THIS IS FROM INSIDE updateBook')
+    let id = req.params.id;
+    // let SQL = `UPDATE tasks SET title=$1,description=$2,contact=$3, status=$4, category=$5 WHERE id=$6;`;
+    let { image_url, title, author, description, bookshelf, isbn } = req.body;
+    let SQL = `UPDATE books SET image_url=$1, title=$2, author=$3, description=$4, bookshelf=$5, isbn=$6 WHERE id=$7 ;`;
+    let safeValues = [image_url, title, author, description, bookshelf, isbn ,id];
+    client.query(SQL,safeValues)
+    .then(()=>{
+        res.redirect(`/books/${id}`)
+    })
+}
 
 server.get('/showww', storedBookShow);
 function storedBookShow(req, res) {

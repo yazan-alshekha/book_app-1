@@ -1,7 +1,7 @@
 
         <section>
            
-            <img src=" <%= bookDetails.image_url%>" alt="" srcset="" />
+            <img src=" <%= bookDetails.image_url%>" />
             <h2>
               <%= bookDetails.title%><br/>
       
@@ -16,6 +16,48 @@
             <p>
               <%= bookDetails.bookshelf %>
             </p>
+            <!-- <form action="/deleteTask/< task.id >?_method=delete" method="post"> -->
+
+            <button></button><a href="/delete/<%= bookDetails.id%>"  >Delete</a></button>
+            <button id="editBtn">Edit</button>
             <hr />
+            <form action="/update/<%= bookDetails.id%>?_method=put" method="post" id="toggleForm">
+             <img src=" <%= bookDetails.image_url%>" name="image_url" > 
+              <input type="text" value=" <%= bookDetails.title %>" name="title">
+              <input type="text" value=" <%= bookDetails.author %>" name="author">
+              <input type="text" value=" <%= bookDetails.description %>" name="description">
+              <input type="text" value=" <%= bookDetails.bookshelf %>" name="bookshelf">
+              <input type="text" value=" <%= bookDetails.isbn %>" name="isbn">
+              <button>Update</button>
+            </form>
         </section>
-      
+
+        <!-- <form action="/deleteTask/<= task.id %>?_method=delete" method="post"> -->
+
+        <!-- <section id='updateForm'>
+          <h2>Update Task</h2>
+          
+          <form action="/updateTask/<= task.id %>?_method=put" method="post">
+            <fieldset>
+              <input type="text" name='title' value="<= task.title %>" placeholder="Task title">
+              <textarea type="text" name='description' placeholder="Task Description" cols="40" rows="20">
+                <@ task.description@>
+              </textarea>
+              <input type="text" name='contact' value='<= task.contact%>' placeholder="Task contact">
+              <input type="text" name='status'  value='<= task.status%>'  placeholder="Task status">
+              <input type="text" name='category'  value='<= task.category%>'  placeholder="Task category">
+              <button type="submit">Update Task</button>
+            </fieldset>
+          </form>
+        </section>
+    function updateTask (req,res) {
+      let {title,description, contact, status, category} = req.body;
+      let SQL = `UPDATE tasks SET title=$1,description=$2,contact=$3, status=$4, category=$5 WHERE id=$6;`;
+      let id = req.params.task_id;
+      let values=[title,description, contact, status, category,id];
+      client.query(SQL,values)
+      .then(()=>{
+        res.redirect(`/tasks/${id}`)
+      })
+    } -->
+    
