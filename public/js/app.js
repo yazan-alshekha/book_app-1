@@ -15,6 +15,12 @@ function burger(){
     links.style.display = 'none';
     quit.style.display = 'none';
   }
-  $('#viewButton').on('click', function () {
-    $('.toggleForm').slideToggle();
+  
+  console.log("fly");
+
+  $('.viewButton').click(function () {
+    console.log("inside");
+    $(this).parent().find('.toggleForm').slideToggle();
   });
+
+  

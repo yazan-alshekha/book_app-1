@@ -77,12 +77,34 @@ server.get('/books/:id', (req, res) => {
 });
 
 
+
+server.post('/books',addToDB);
+
+function addToDB(req, res){
+  
+    const item = req.body;
+    console.log(req.params.id)
+    let SQL = `INSERT INTO books (author, title, isbn, image_url, description, bookshelf) VALUES($1, $2, $3, $4, $5, $6);`
+    let SQL2 = `SELECT * FROM books;`;
+    const safeValues = [item.author, item.bookTitle, item.ISBN, item.thumnail, item.description, item.bookshell];
+    client.query(SQL2)
+    .then(client.query(SQL, safeValues))
+    .then( data=>{
+  let id = data.rows[data.rows.length-1].id;
+      console.log(data.rows[data.rows.length-1])
+  res.redirect(`/books/${id}`)
+//   res.redirect(`/`)
+    });
+  }
+  
+
 server.get('/showww', storedBookShow);
 function storedBookShow(req, res) {
 
     res.render('pages/books/show',)
 
 }
+
 server.get('/hello', (req, res) => {
     res.render('pages/index')
 });
