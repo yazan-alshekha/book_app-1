@@ -1,36 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles/reset.css" />
-    <link rel="stylesheet" href="styles/base.css" />
-    <link
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
-    />
+  
+    <%- include('../../layout/head') %>
+
+
     <title>Document</title>
   </head>
   <body>
+    <header>
+      <h1 class="appTitle">Hello world</h1>
+      <!-- <a href="/search">Search</a> -->
+      <i id="burger" class="material-icons" onclick="burger()">menu</i>
+      <i id="quit" class="material-icons" onclick="quit()">clear</i>
+      <div id="links">
+        <a href="/search/new">Search</a>
+      </div>
+    </header>
     <ul>
       <% books.forEach(book => {%> <% if (book.img.length > 0){%>
+      <li>
+        <img src=" <%= book.img%>" alt="" srcset="" />
+        <%} else{ %>
+        <img src="https://i.imgur.com/J5LVHEL.jpg" alt="" srcset="" />
+        <% }%>
+        <h2><%= book.title%><br /></h2>
 
-      <img src=" <%= book.img%>" alt="" srcset="" />
-      <%} else{ %>
-      <img src="https://i.imgur.com/J5LVHEL.jpg" alt="" srcset="" />
-      <% }%>
-      <h2>
-        <%= book.title%><br />
+        <h3>
+          <%= book.author %>
+        </h3>
 
-      </h2>
+        <p><%= book.desc%></p>
+        <p>
+          <%= book.isbn %>
+        </p>
+        <p>
+          <%= book.bookshelf %>
+        </p>
+        <button class="viewButton">View</button>
+       
+          <form action="/books" class="toggleForm" method="post">
 
-      <h3>
-        <%= book.auther %> 
-      </h3>
+          <input type="text" value="<%= book.title %>" name="bookTitle" />
+          <input type="text" value="<%= book.author %>" name="author" />
+          <input type="text" value="<%= book.thumnail %>" name="thumnail" />
+          <input type="text" value="<%= book.isbn %>"   name="ISBN"/>
+          <textarea  name="description"><%= book.desc %></textarea>
+          <input type="text" value="<%= book.bookshelf %>" name="bookshelf" />
 
-      <p><%= book.desc%></p>
+          <input type="text" id="categoryInput" />
+          <button>ADD</button>
+        </form>
+      </li>
       <hr />
       <%});%>
     </ul>
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.js"></script> -->
+
+    <script src="/js/app.js"></script>
   </body>
 </html>
