@@ -152,19 +152,9 @@ server.get('*', (req, res) => {
 });
 
 client.connect()
-<<<<<<< HEAD
 .then(()=>{
 
     server.listen(PORT, () => {
         console.log(`Hello I'm the server,Listening to port: ${PORT}`);
     });
 });
-=======
-    .then(() => {
-        server.listen(PORT, () => {
-            console.log(`Hello I'm the server,Listening to port: ${PORT}`);
-        });
-    })
-
-
->>>>>>> bce967575fb25be3ad7735e3636abe42ec798ca7
