@@ -8,7 +8,7 @@ const superagent = require('superagent');
 const cors = require('cors');
 // const { resolveSoa } = require('dns');
 const pg = require('pg');
-const client =new pg.Client(process.env.DATABASE_URL);
+const client = new pg.Client(process.env.DATABASE_URL);
 
 const server = express();
 const PORT = process.env.PORT;
@@ -42,12 +42,13 @@ server.get('/search/new', (req, res) => {
     res.render('pages/searches/new');
 });
 
+
 server.post('/searches', (req, res) => {
     let searchBy = req.body.by;
     let searchFor = req.body.bookName;
     // let url = `https://www.googleapis.com/books/v1/volumes?q=search+terms`;
     let url = `https://www.googleapis.com/books/v1/volumes?`;
-    if (searchBy == 'author') { url += `q=${searchFor}+inauthor` } else (url += `q=${searchFor}+intitle`)
+    if (searchBy == 'author') { url += `q=${searchFor}+inauthor` } else(url += `q=${searchFor}+intitle`)
 
     superagent.get(url)
         .then(books => {
@@ -100,7 +101,7 @@ function addToDB(req, res) {
             let id = data.rows[data.rows.length - 1].id;
             console.log(data.rows[data.rows.length - 1])
             res.redirect(`/books/${id}`)
-            //   res.redirect(`/`)
+                //   res.redirect(`/`)
         });
 };
 server.get('/delete/:id', deleteFunc);
@@ -130,17 +131,18 @@ function updateBook(req, res) {
     // let SQL = `UPDATE tasks SET title=$1,description=$2,contact=$3, status=$4, category=$5 WHERE id=$6;`;
     let { image_url, title, author, description, bookshelf, isbn } = req.body;
     let SQL = `UPDATE books SET image_url=$1, title=$2, author=$3, description=$4, bookshelf=$5, isbn=$6 WHERE id=$7 ;`;
-    let safeValues = [image_url, title, author, description, bookshelf, isbn ,id];
-    client.query(SQL,safeValues)
-    .then(()=>{
-        res.redirect(`/books/${id}`)
-    })
+    let safeValues = [image_url, title, author, description, bookshelf, isbn, id];
+    client.query(SQL, safeValues)
+        .then(() => {
+            res.redirect(`/books/${id}`)
+        })
 }
 
 server.get('/showww', storedBookShow);
+
 function storedBookShow(req, res) {
 
-    res.render('pages/books/show',)
+    res.render('pages/books/show')
 
 }
 
@@ -152,9 +154,9 @@ server.get('*', (req, res) => {
 });
 
 client.connect()
-.then(()=>{
+    .then(() => {
 
-    server.listen(PORT, () => {
-        console.log(`Hello I'm the server,Listening to port: ${PORT}`);
+        server.listen(PORT, () => {
+            console.log(`Hello I'm the server,Listening to port: ${PORT}`);
+        });
     });
-});
